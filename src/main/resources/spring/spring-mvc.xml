@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/mvc     
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+		http://www.springframework.org/schema/cache 
+        http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
+
+
+	 <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->  
+	<context:component-scan base-package="com.sxis.*" />
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<mvc:interceptors>  
+        <mvc:interceptor>  
+            <!-- 需拦截的地址 -->  
+            <!-- 一级目录 -->  
+             <mvc:mapping path="/*" />   
+           <!-- <mvc:mapping path="/*.ajax" />  
+            <mvc:mapping path="/*.htm" />   -->
+  
+            <!-- 二级目录 -->  
+            <!-- <mvc:mapping path="/*/*.do" />  
+            <mvc:mapping path="/*/*.ajax" />  
+            <mvc:mapping path="/*/*.htm" />  -->
+            <!-- 需排除拦截的地址 -->  
+            <mvc:exclude-mapping path="/manager/login.do"/>  
+            <bean class="com.sxis.interceptor.LoginInterceptor" />  
+        </mvc:interceptor>  
+    </mvc:interceptors>  
+	
+	<bean id="handlerExceptionResolver"
+	    class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+	    <property name="exceptionMappings">
+	        <props>
+	            <prop key="smartcrud.common.exception.AuthorizationException">redirect:/login</prop>
+	        </props>
+	    </property>
+	</bean>
+	
+	<!-- 缓存配置 -->
+    <!-- 启用缓存注解功能(请将其配置在Spring主配置文件中) -->
+<!--     <cache:annotation-driven cache-manager="cacheManager" />
+    若只想使用Spring自身提供的缓存器,则注释掉下面的两个关于Ehcache配置的bean,并启用上面的SimpleCacheManager即可
+    Spring提供的基于的Ehcache实现的缓存管理器
+    <bean id="cacheManagerFactory"
+        class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml" />
+    </bean>
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="cacheManagerFactory" />
+    </bean> -->
+	
+
+</beans>

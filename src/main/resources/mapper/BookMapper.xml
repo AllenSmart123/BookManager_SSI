@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+<mapper namespace="com.sxis.dao.BookDao">
+<!--    <resultMap type="com.sxis.model.Manager" id="managerResultMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="grade" column="grade" />
+   </resultMap> -->
+ 
+
+   <select id="getAllBookInfo" resultType="BookBean">    
+        select * from tb_bookinfo 
+   </select>
+   <select id="getNewestBookInfo" resultType="BookBean">
+   		SELECT * FROM tb_bookinfo ORDER BY id DESC LIMIT 1
+   </select>
+   <select id="getBookById" resultType="BookBean">    
+        SELECT * FROM tb_bookinfo WHERE bookId=#{bookId}
+   </select>
+    <select id="getListByPage" resultType="BookBean">
+    	 select * from tb_bookinfo
+    	<where>
+    		<if test="selectName!=null and selectName!='' ">
+    			${selectName} like CONCAT('%',#{selectValue},'%')
+    		</if>
+    	</where>    
+         limit #{currentPage},#{pageSize}
+   </select>
+   <select id="getTotalBookCount" resultType="integer">    
+        select count(*) from tb_bookinfo 
+   </select>
+   
+   <insert id="saveBook" parameterType="BookBean">
+       insert into tb_bookinfo(bookId,bookName,barcode,author,ISBN,price,page,publishTime,bookType,borrowDays,ownership,bookcaseRow,bookcaseColumn,bookcaseFloor,bookHouse)
+	   values(#{bookId},#{bookName},#{barcode},#{author},#{ISBN},#{price},#{page},#{publishTime},#{bookType},#{borrowDays},#{ownership},#{bookcaseRow},#{bookcaseColumn},#{bookcaseFloor},#{bookHouse})
+   </insert>
+   
+   <update id="updateBook" parameterType="BookBean">
+       update tb_bookinfo set bookName=#{bookName},barcode=#{barcode},author=#{author},ISBN=#{ISBN},price=#{price},page=#{page},publishTime=#{publishTime},
+       bookType=#{bookType},borrowDays=#{borrowDays},ownership=#{ownership},bookcaseRow=#{bookcaseRow},bookcaseColumn=#{bookcaseColumn},bookcaseFloor=#{bookcaseFloor},
+       bookHouse=#{bookHouse} where bookId=#{bookId}
+   </update>
+   <update id="updateBookHouseSum">
+   		update tb_bookinfo set bookHouse=#{bookHouse} where bookId=#{bookId}
+   </update>  
+   <delete id="deleteBookById">
+   	   delete from tb_bookinfo where bookId = #{0}
+   </delete>
+   
+</mapper>
+

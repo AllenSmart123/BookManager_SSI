@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+<mapper namespace="com.sxis.dao.GiveBackDao">
+<!--    <resultMap type="com.sxis.model.Manager" id="managerResultMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="grade" column="grade" />
+   </resultMap> -->
+ 
+    <select id="getListByPage" resultType="GiveBackBean">
+    	SELECT tb_giveback.readerid as readerId,readerName,tb_giveback.bookid as bookId,bookName,backTime,tb_giveback.operator FROM tb_giveback,tb_bookinfo,tb_reader
+    	<where>
+    		<if test="selectName!=null and selectName!='' ">
+    			tb_bookinfo.${selectName} like CONCAT('%',#{selectValue},'%')
+    		</if>
+    		and tb_giveback.bookid=tb_bookinfo.bookId AND tb_giveback.readerid=tb_reader.readerId
+    	</where>
+         limit #{currentPage},#{pageSize}
+   </select>
+   <select id="getTotalGiveBackCount" resultType="integer">    
+        SELECT COUNT(*) FROM tb_giveback; 
+   </select>
+   <insert id="addGiveBackInfo">
+   		insert into tb_giveback(readerid,bookid,backTime) values(#{readerId},#{bookId},#{backTime})
+   </insert>
+</mapper>
+

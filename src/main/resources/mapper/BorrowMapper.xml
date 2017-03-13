@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+<mapper namespace="com.sxis.dao.BorrowDao">
+<!--    <resultMap type="com.sxis.model.Manager" id="managerResultMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="grade" column="grade" />
+   </resultMap> -->
+ 
+    <select id="getListByPage" resultType="BorrowBean">
+    	SELECT tb_borrow.bookid as bookId,bookName,author,ISBN,price,page,publishTime,bookType,ownership,COUNT(tb_borrow.bookid) AS sort FROM tb_borrow,tb_bookinfo
+    	<where>
+    		<if test="selectName!=null and selectName!='' ">
+    			tb_borrow.${selectName} like CONCAT('%',#{selectValue},'%')
+    		</if>
+    		and tb_borrow.bookid=tb_bookinfo.bookId
+    	</where>
+    	 GROUP BY tb_borrow.bookid ORDER BY sort    
+         limit #{currentPage},#{pageSize}
+   </select>
+   <select id="getTotalBorrowCount" resultType="integer">    
+        SELECT COUNT(*) FROM (SELECT * FROM tb_borrow GROUP BY bookid) AS A; 
+   </select>
+   <select id="getBookHouseSumById" resultType="integer">    
+        SELECT bookHouse FROM tb_bookinfo where bookId=#{bookId} 
+   </select>
+   <select id="getBorrowBeanByCondition" resultType="BorrowBean">    
+        SELECT * FROM tb_borrow WHERE bookid=#{bookId} AND readerid=#{readerId} and ifback = 0
+   </select>
+   <insert id="addBorrowInfo">
+   		insert into tb_borrow(bookid,readerid,borrowTime,backTime,ifback) values(#{bookId},#{readerId},#{borrowTime},#{backTime},#{ifback})
+   </insert>
+ 
+</mapper>
+

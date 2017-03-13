@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+<mapper namespace="com.sxis.dao.BorrowDetailDao">
+<!--    <resultMap type="com.sxis.model.Manager" id="managerResultMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="grade" column="grade" />
+   </resultMap> -->
+ 
+    <select id="getListByPage" resultType="BorrowDetailBean">
+    	SELECT tb_borrow.readerid as readerId,readerName,tb_borrow.bookid as bookId,bookName,borrowTime,backTime,ifback FROM tb_borrow,tb_bookinfo,tb_reader
+    	<where>
+    		<if test="selectName!=null and selectName!='' ">
+    			tb_bookinfo.${selectName} like CONCAT('%',#{selectValue},'%')
+    		</if>
+    		and tb_borrow.bookid=tb_bookinfo.bookId AND tb_borrow.readerid=tb_reader.readerId
+    	</where>    
+         limit #{currentPage},#{pageSize}
+   </select>
+   <select id="getTotalBorrowDetailCount" resultType="integer">    
+        SELECT COUNT(*) FROM tb_borrow 
+   </select>
+   <update id="updateIfBackState">
+   		update tb_borrow set ifback=1 where bookid=#{bookId} and readerid=#{readerId}
+   </update>
+   
+   <select id="isBackById" resultType="BorrowBean">    
+        SELECT * FROM tb_borrow WHERE bookid=#{bookId} AND readerid=#{readerId} and ifback=1
+   </select>
+  
+   <select id="getBorrowInfoByIfback" resultType="BorrowDetailBean">    
+        SELECT * FROM tb_borrow WHERE ifback=0
+   </select>	
+   	
+</mapper>
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxis.dao.GeneralDao">
+
+<!-- 执行插入语句 -->
+<insert id="executeInsertSql">
+	${insertSql}
+</insert>
+<!-- 执行删除语句 -->
+<delete id="executeDeleteSql">
+	${deleteSql}
+</delete>
+<!-- 执行更新语句 -->
+<update id="executeUpdateSql">
+	${updateSql}
+</update>
+</mapper>  

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<quartz>   
+	<job> 
+		<job-detail>      
+			<name>ScanDirectory1</name>      
+			<group>DEFAULT</group>      
+			<description>A job that scans a directory for files</description>      
+			<job-class>com.quartz.QuartzJob</job-class>      
+			<volatility>false</volatility>      
+			<durability>false</durability>      
+			<recover>false</recover>
+		</job-detail> 
+		<trigger>   
+			<cron>   
+				<name>CronTriggerEmp</name>   
+				<group>AUTO</group>   
+				<job-name>dailybalance</job-name>   
+				<job-group>balance</job-group>   
+				<cron-expression>0/10 * * * * ?</cron-expression>   
+			</cron>   
+		</trigger>   
+	</job> 
+</quartz>

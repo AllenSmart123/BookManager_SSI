@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+<mapper namespace="com.sxis.dao.ManagerDao">
+<!--    <resultMap type="com.sxis.model.Manager" id="managerResultMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="grade" column="grade" />
+   </resultMap> -->
+ 
+
+   <select id="checkLogin" parameterType="ManagerBean" resultType="ManagerBean">    
+        select * from tb_manager where name = #{name} and password = #{password}   
+   </select>
+   <insert id="addManagerInfo" parameterType="ManagerBean">
+   		insert into tb_manager(name,password,grade) values(#{name},#{password},#{grade})
+   </insert>
+   <delete id="deleteManagerInfo">
+   		delete from tb_manager where name=#{name}
+   </delete>
+</mapper>
+

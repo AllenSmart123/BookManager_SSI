@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+<mapper namespace="com.sxis.dao.ReaderDao">
+<!--    <resultMap type="com.sxis.model.Manager" id="managerResultMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="grade" column="grade" />
+   </resultMap> -->
+ 
+
+   <select id="getAllReaderInfo" resultType="ReaderBean">    
+        select * from tb_reader 
+   </select>
+   <select id="getNewestReaderInfo" resultType="ReaderBean">
+   		SELECT * FROM tb_reader ORDER BY id DESC LIMIT 1
+   </select>
+   <select id="getReaderById" resultType="ReaderBean">    
+        SELECT * FROM tb_reader WHERE readerId=#{readerId}
+   </select>
+    <select id="getListByPage" resultType="ReaderBean">
+    	 select * from tb_reader
+    	<where>
+    		<if test="selectName!=null and selectName!='' ">
+    			${selectName} like CONCAT('%',#{selectValue},'%')
+    		</if>
+    	</where>    
+         limit #{currentPage},#{pageSize}
+   </select>
+   <select id="getTotalReaderCount" resultType="integer">    
+        select count(*) from tb_reader 
+   </select>
+   
+   <insert id="saveReader" parameterType="ReaderBean">
+       insert into tb_reader(readerId,readerName,sex,birthday,identityNum,readerType,canBorrowNum,phone,email,registerDate,remark)
+	   values(#{readerId},#{readerName},#{sex},#{birthday},#{identityNum},#{readerType},#{canBorrowNum},#{phone},#{email},#{registerDate},#{remark})
+   </insert>
+   
+   <update id="updateReader" parameterType="ReaderBean">
+       update tb_reader set readerName=#{readerName},sex=#{sex},birthday=#{birthday},identityNum=#{identityNum},readerType=#{readerType},canBorrowNum=#{canBorrowNum},phone=#{phone},
+       email=#{email},registerDate=#{registerDate},remark=#{remark} where readerId=#{readerId}
+   </update> 
+   <delete id="deleteReaderById">
+   	   delete from tb_reader where readerId = #{0}
+   </delete>
+   
+</mapper>
+
