@@ -102,27 +102,27 @@ $(".registerform").Validform({
   <div id="o-box-down"  style="table-layout:fixed;">
    <div class="error-box"></div>
    
-   <form name="loginForm" id="myform1" method="post" action="manager/login.do">
+   <form name="loginForm" id="myform1" method="post" action="managerLogin/login.do">
 	  <div class="fm-item">
-		   <label for="logonId" class="form-label">上讯图书系统登陆：</label>
+		   <label class="form-label">上讯图书系统登陆：</label>
 		   <input type="text" value="输入账号" maxlength="100" name="name" id="username" class="i-text" ajaxurl="demo/valid.jsp"  datatype="s6-18" errormsg="用户名至少6个字符,最多18个字符！"  >    
 	       <div class="ui-form-explain"></div>
 	  </div>
   
 	  <div class="fm-item">
-		   <label for="logonId" class="form-label">登陆密码：</label>
+		   <label class="form-label">登陆密码：</label>
 		   <input type="password" value="" maxlength="100" name="password" id="password" class="i-text" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！">    
 	       <div class="ui-form-explain"></div>
 	  </div>
   
 	  <div class="fm-item pos-r">
-		   <label for="logonId" class="form-label">验证码</label>
+		   <label class="form-label">验证码</label>
 		   <input type="text" value="输入验证码" maxlength="100" id="yzm" class="i-text yzm" nullmsg="请输入验证码！" >    
 	       <div class="ui-form-explain"><img src="images/yzm.jpg" class="yzm-img" /></div>
 	  </div>
   
 	  <div class="fm-item">
-		   <label for="logonId" class="form-label"></label>
+		   <label class="form-label"></label>
 		   <input type="submit" value="" tabindex="4" id="send-btn" class="btn-login"> 
 	       <div class="ui-form-explain"></div>
 	  </div>

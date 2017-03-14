@@ -20,7 +20,7 @@ import com.sxis.service.ManagerService;
 
 @Controller
 @Scope("prototype")
-@RequestMapping("/manager")
+@RequestMapping("/managerLogin")
 public class ManagerController{
 
 
@@ -49,8 +49,7 @@ public class ManagerController{
 	}
 	
 	/**
-	 * 
-	 * @param manager
+	 *
 	 * @param model
 	 * @param request
 	 * @param response
