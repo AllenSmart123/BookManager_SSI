@@ -1,6 +1,8 @@
 package com.sxis.util;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,13 +34,37 @@ public class DateUtil {
             System.err.println(str);// 打印最终结果
 
             System.err.println(df.format( new Date(  ) ));// 打印最终结果
+
+
+
+
+
+
+
+            DateTime dt = new DateTime( new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US).parse( "Thu May 25 00:00:00 CST 2017" ) );
+
+            System.out.println("=============================================="+ dt.toString("yyyy-MM-dd HH:mm:ss"));
+
+
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         System.out.println("==============================================");
-        System.out.println( new DateTime( new Date(  ).getTime() ) );
+
+
+       /* DateTimeFormatter format = DateTimeFormat.forPattern( "EEE MMM dd HH:mm:ss zzz yyyy");
+        //时间解析
+        DateTime dateTime2 = DateTime.parse("2012-12-21 23:22:45", format);*/
+
+
+       /* DateTimeFormatter dateTimeFormatter = DateTimeFormat.f .forPattern( "EEE MMM dd HH:mm:ss zzz yyyy");
+
+        DateTime dateTime = DateTime.parse("Thu May 25 00:00:00 CST 2017", dateTimeFormatter );*/
+        //System.out.println(dateTime2.toString( "EEE MMM dd HH:mm:ss zzz yyyy", Locale.US ));
+
+        System.out.println( new DateTime().toString( "EEE MMM dd HH:mm:ss zzz yyyy", Locale.US ) );
+
 
     }
 
