@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
+			 <version>4.2.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
